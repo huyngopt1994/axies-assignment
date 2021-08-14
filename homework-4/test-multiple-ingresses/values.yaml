@@ -1,0 +1,14 @@
+domain: gw.skymavis.xyz
+
+ingressAnnotations: {}
+  # # for example
+  # kubernetes.io/ingress.class: "nginx"
+
+image:
+  repository: nginx
+  tag: 1.15-alpine
+  pullPolicy: IfNotPresent
+
+hosts:
+  - name: us
+  - name: eu

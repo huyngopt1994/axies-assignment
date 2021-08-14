@@ -1,0 +1,22 @@
+{{- $fullName := include "test-multiple-ingresses.fullname" . -}}
+{{- $svcPort := 80 -}}
+{{- $domain := .Values.domain }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  {{- with .Values.ingressAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:
+  {{- range $key, $value := .Values.hosts }}
+  - host: "{{ $value.name }}.{{ $domain }}"
+    http:
+      paths:
+        - path: /
+          backend:
+            serviceName: {{ $fullName }}
+            servicePort: {{ $svcPort }}
+  {{- end }}
