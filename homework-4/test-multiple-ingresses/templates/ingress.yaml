@@ -17,6 +17,6 @@ spec:
       paths:
         - path: /
           backend:
-            serviceName: {{ $fullName }}
+            serviceName: "{{ $value.name }}-{{ $fullName }}"
             servicePort: {{ $svcPort }}
   {{- end }}

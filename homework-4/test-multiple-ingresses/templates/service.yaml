@@ -1,7 +1,9 @@
+{{- $fullName := include "test-multiple-ingresses.fullname" . -}}
+{{- range $key, $value := .Values.hosts }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "test-multiple-ingresses.fullname" . }}
+  name: "{{ $value.name }}-{{ $fullName }}"
 spec:
   type: ClusterIP
   ports:
@@ -9,3 +11,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+  selector:
+    host: "{{ $value.name }}"
+---
+{{- end }}
